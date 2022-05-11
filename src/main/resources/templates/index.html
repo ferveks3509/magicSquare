@@ -8,8 +8,17 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         function myFunction() {
-            var checkBox = document.getElementById("flexCheckIndeterminate");
+            var checkBox = document.getElementById("checkBox1");
             var text = document.getElementById("box1");
+            if (checkBox.checked === true) {
+                text.style.display = "block";
+            } else {
+                text.style.display = "none";
+            }
+        }
+        function myFunction2() {
+            var checkBox = document.getElementById("checkBox2");
+            var text = document.getElementById("box2");
             if (checkBox.checked === true) {
                 text.style.display = "block";
             } else {
@@ -20,8 +29,8 @@
 </head>
 <body>
 <div class="form-check">
-    <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" onclick="myFunction()">
-    <label class="form-check-label" for="flexCheckIndeterminate">
+    <input class="form-check-input" type="checkbox" value="" id="checkBox1" onclick="myFunction()">
+    <label class="form-check-label" for="checkBox1">
         Magic Square
     </label>
     <div class="container" id="box1" style="display: none">
@@ -84,6 +93,33 @@
                         <td th:text="${magicSquare.getCreated()}"></td>
                     </tr>
                 </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="from-check" >
+    <input class="form-check-input" type="checkbox" value="" id="checkBox2" onclick="myFunction2()">
+    <label class="form-check-label" for="checkBox2">
+        Contains String
+    </label>
+    <div class="container" id="box2" style="display: none">
+        <div class="box">
+            <form th:action="@{/contains}" method="post">
+                <div class="mb-3">
+                    <label for="inputStr" class="form-label">Введите текс для поиска</label>
+                    <input type="text" class="form-control" id="inputStr" name="firstInput"
+                           placeholder="arp live strong">
+                    <label for="inputStr2" class="form-label">Введите слова для поиска</label>
+                    <input type="text" class="form-control" id="inputStr2" name="secondInput"
+                           placeholder="lively alive harp sharp armstrong">
+                    <button type="submit" class="btn btn-success">Найти</button>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            <div class="row" th:if="${resultStr != null}">
+                <label for="result">Результат</label>
+                <p id="result" th:text="${resultStr.toString()}"></p>
             </div>
         </div>
     </div>

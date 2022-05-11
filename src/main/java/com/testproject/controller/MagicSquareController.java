@@ -1,25 +1,19 @@
 package com.testproject.controller;
 
-import com.testproject.service.ContainsStr;
 import com.testproject.service.MagicSquareService;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-
 @Controller
-public class IndexController {
+public class MagicSquareController {
 
     private final MagicSquareService magicSquareService;
-    private final ContainsStr containsStrService;
 
-    public IndexController(MagicSquareService magicSquareService, ContainsStr containsStr) {
+    public MagicSquareController(MagicSquareService magicSquareService) {
         this.magicSquareService = magicSquareService;
-        this.containsStrService = containsStr;
     }
 
     @GetMapping("/")

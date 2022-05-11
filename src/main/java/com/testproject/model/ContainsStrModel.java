@@ -1,12 +1,12 @@
 package com.testproject.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table(name = "str_model")
-public class StrModel {
-
+public class ContainsStrModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -17,7 +17,17 @@ public class StrModel {
     @Column(name = "result_str")
     private String result;
 
-    public StrModel() {
+    private LocalDate created;
+
+    public ContainsStrModel() {
+    }
+
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
     }
 
     public int getId() {
@@ -56,7 +66,7 @@ public class StrModel {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        StrModel that = (StrModel) o;
+        ContainsStrModel that = (ContainsStrModel) o;
         return id == that.id;
     }
 
@@ -67,11 +77,12 @@ public class StrModel {
 
     @Override
     public String toString() {
-        return "ArrayModel{" +
+        return "ContainsStrModel{" +
                 "id=" + id +
                 ", inputStr='" + inputStr + '\'' +
                 ", compareStr='" + compareStr + '\'' +
                 ", result='" + result + '\'' +
+                ", created=" + created +
                 '}';
     }
 }
