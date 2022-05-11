@@ -115,6 +115,17 @@
                     <button type="submit" class="btn btn-success">Найти</button>
                 </div>
             </form>
+            <form th:action="@{/containsSave}" method="post">
+                <div class="mb-3">
+                    <label for="inputStr3" class="form-label">Введите текс для поиска</label>
+                    <input type="text" class="form-control" id="inputStr3" name="firstInput"
+                           placeholder="arp live strong">
+                    <label for="inputStr4" class="form-label">Введите слова для поиска</label>
+                    <input type="text" class="form-control" id="inputStr4" name="secondInput"
+                           placeholder="lively alive harp sharp armstrong">
+                    <button type="submit" class="btn btn-success">Найти и сохранить</button>
+                </div>
+            </form>
         </div>
         <div class="container">
             <div class="row" th:if="${resultStr != null}">
