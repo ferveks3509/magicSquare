@@ -13,7 +13,7 @@
             if (checkBox.checked === true) {
                 text.style.display = "block";
             } else {
-                text.style.display = "none" ;
+                text.style.display = "none";
             }
         }
     </script>
@@ -22,16 +22,33 @@
 <div class="form-check">
     <input class="form-check-input" type="checkbox" value="" id="flexCheckIndeterminate" onclick="myFunction()">
     <label class="form-check-label" for="flexCheckIndeterminate">
-        Задание 1
+        Magic Square
     </label>
     <div class="container" id="box1" style="display: none">
-        <form th:action="@{/magicSquare}" method="post">
-            <div class="mb-3">
-                <label for="inputText" class="form-label">Введите числа от 1 до 9</label>
-                <input type="text" class="form-control" id="inputText" name="magicSq" placeholder="1 2 3 4 5 6 7 8 9">
-                <button type="submit" class="btn btn-success">Сохранить</button>
-            </div>
-        </form>
+        <div class="box">
+            <form th:action="@{/magicSquare}" method="post">
+                <div class="mb-3">
+                    <label for="inputText" class="form-label">Введите числа от 1 до 9</label>
+                    <input type="text" class="form-control" id="inputText" name="magicSq"
+                           placeholder="1 2 3 4 5 6 7 8 9">
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                </div>
+                <div class="mb-3">
+                    <form th:action="@{/magicSquareCount}" method="post">
+                        <button type="submit" class="btn btn-success">Посчитать</button>
+                    </form>
+                </div>
+                <div class="mb-3">
+                    <form th:action="@{/saveFile}" method="post">
+                        <label for="inputMs" class="form-label">Введите числа которые хотите сохранить</label>
+                        <input type="text" class="form-control" id="inputMs" name="magicSq" placeholder="987654321">
+                        <label for="saveFile" class="form-label">Укажите имя файла</label>
+                        <input type="text" class="form-control" id="saveFile" name="fileName" placeholder="file.txt">
+                        <button type="submit" class="btn btn-success">Экспортировать</button>
+                    </form>
+                </div>
+            </form>
+        </div>
         <div class="container">
             <div class="row" th:if="${result != null}">
                 <label for="rsl">Результат</label>

@@ -27,7 +27,19 @@ public class IndexController {
     @PostMapping("/magicSquare")
     public String inputNumb(@RequestParam("magicSq") String magicSq, Model model) {
         model.addAttribute("result",magicSquareService.save(magicSq));
-        model.addAttribute("result2", "hello");
+        return "index";
+    }
+
+    @PostMapping("/magicSquareCount")
+    public String inputValue(@RequestParam("magicSq") String magicSq, Model model) {
+        model.addAttribute("result",magicSquareService.result(magicSq));
+        return "index";
+    }
+
+    @PostMapping("/saveFile")
+    public String saveFile(@RequestParam("fileName") String fileName,
+                           @RequestParam("magicSq") String magicSq) {
+        magicSquareService.saveFile(magicSq, fileName);
         return "index";
     }
 }
