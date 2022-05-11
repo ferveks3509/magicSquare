@@ -4,12 +4,8 @@ import com.testproject.model.MagicSquareModel;
 import com.testproject.repository.MagicSquareRepository;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,7 +14,7 @@ public class MagicSquareService {
     /**
      * варианты магического квадрата
      */
-    private final int[] CONST = new int[] {4, 3, 8, 2, 7, 6, 9, 5, 1};
+    private final int[] CONST = new int[]{4, 3, 8, 2, 7, 6, 9, 5, 1};
 
     private final MagicSquareRepository magicSquareRepository;
 
@@ -26,14 +22,7 @@ public class MagicSquareService {
         this.magicSquareRepository = magicSquareRepository;
     }
 
-    public List<MagicSquareModel> findAll() {
-        List<MagicSquareModel> data = new ArrayList<>();
-        magicSquareRepository.findAll().forEach(data::add);
-        return data;
-    }
-
     public List<MagicSquareModel> findByDate(String localDate) {
-        //LocalDate.parse(localDate)
         return magicSquareRepository.findByCreated(localDate);
     }
 
@@ -44,29 +33,51 @@ public class MagicSquareService {
         magicSquareRepository.save(magicSquareModel);
         return magicSquareModel;
     }
-    
+
+    /**
+     * @param input набор данных пользователя без сохранения в БД
+     * @return магический квадрат с кол-вом перестановок чисел
+     */
     public MagicSquareModel result(String input) {
         MagicSquareModel magicSquareModel = new MagicSquareModel();
         sorted(input, magicSquareModel);
         return magicSquareModel;
     }
 
-    public void saveFile(String input, String nameFile){
-       try(PrintWriter out = new PrintWriter(
-               new BufferedOutputStream(
-                       new FileOutputStream(nameFile)
-               )
-       )){
-           out.println(input);
-           out.println("Тип задачи: MagicSquare");
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
+    /**
+     *
+     * @param fileName принимает имя файла. Читает и конвертирует в обьект MagicSquare
+     * @return обьект magicSquare
+     */
+    public MagicSquareModel findFile(String fileName) {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(
+                new FileReader(fileName)
+        )){
+            sb.append(in.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MagicSquareModel magicSquareModel = new MagicSquareModel();
+        sorted(sb.toString(), magicSquareModel);
+        return magicSquareModel;
+    }
+
+    public void saveFile(String input, String nameFile) {
+        try (PrintWriter out = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream(nameFile)
+                )
+        )) {
+            out.println(input);
+            out.println("Тип задачи: MagicSquare");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
-     *
-     * @param str набор данных пользователя
+     * @param str              набор данных пользователя
      * @param magicSquareModel
      * @return магический квадрат с кол-вом перестановок чисел
      */
@@ -102,21 +113,20 @@ public class MagicSquareService {
     }
 
     /**
-     *
      * @param input массив чисел
-     * @return является квадрат магическим
+     * @return является ли квардрат магическим
      */
     private boolean checkMagicSquare(int[] input) {
         if (input[0] + input[1] + input[2] == 15 &&
-            input[3] + input[4] + input[5] == 15 &&
-            input[6] + input[7] + input[8] == 15 &&
+                input[3] + input[4] + input[5] == 15 &&
+                input[6] + input[7] + input[8] == 15 &&
 
-            input[0] + input[3] + input[6] == 15 &&
-            input[1] + input[4] + input[7] == 15 &&
-            input[2] + input[5] + input[8] == 15 &&
+                input[0] + input[3] + input[6] == 15 &&
+                input[1] + input[4] + input[7] == 15 &&
+                input[2] + input[5] + input[8] == 15 &&
 
-            input[0] + input[4] + input[8] == 15 &&
-            input[2] + input[4] + input[6] == 15) {
+                input[0] + input[4] + input[8] == 15 &&
+                input[2] + input[4] + input[6] == 15) {
             return true;
         }
         return false;

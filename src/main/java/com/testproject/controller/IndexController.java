@@ -51,4 +51,11 @@ public class IndexController {
         model.addAttribute("magicSquares", magicSquareService.findByDate(localDate));
         return "index";
     }
+
+    @PostMapping("/findFile")
+    public String findFile(@RequestParam("fileName") String fileName, Model model) {
+        magicSquareService.findFile(fileName);
+        model.addAttribute("result", magicSquareService.findFile(fileName));
+        return "index";
+    }
 }
