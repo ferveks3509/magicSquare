@@ -47,6 +47,13 @@
                         <button type="submit" class="btn btn-success">Экспортировать</button>
                     </form>
                 </div>
+                <div class="md-3">
+                    <form th:action="@{/findByDate}" method="post">
+                    <label for="selectDate" class="form-label">Укажите дату для выборки</label>
+                    <input type="text" class="form-control" id="selectDate" name="localDate" placeholder="2022-05-11">
+                    <button type="submit" class="btn btn-success">Загрузить</button>
+                    </form>
+                </div>
             </form>
         </div>
         <div class="container">
@@ -54,6 +61,20 @@
                 <label for="rsl">Результат</label>
                 <p id="rsl" th:text="${result.getInput()}"></p>
                 <p th:text="${result.getResult()}"></p>
+            </div>
+            <div class="row" th:if="${magicSquares != null}">
+                <table>
+                    <tr>
+                        <th>Input</th>
+                        <th>Result</th>
+                        <th>Created</th>
+                    </tr>
+                    <tr th:each="magicSquare : ${magicSquares}">
+                        <td th:text="${magicSquare.getInput()}"></td>
+                        <td th:text="${magicSquare.getResult()}"></td>
+                        <td th:text="${magicSquare.getCreated()}"></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

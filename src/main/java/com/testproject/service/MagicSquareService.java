@@ -4,9 +4,11 @@ import com.testproject.model.MagicSquareModel;
 import com.testproject.repository.MagicSquareRepository;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.net.URI;
-import java.nio.file.*;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,9 +32,15 @@ public class MagicSquareService {
         return data;
     }
 
+    public List<MagicSquareModel> findByDate(String localDate) {
+        //LocalDate.parse(localDate)
+        return magicSquareRepository.findByCreated(localDate);
+    }
+
     public MagicSquareModel save(String input) {
         MagicSquareModel magicSquareModel = new MagicSquareModel();
         sorted(input, magicSquareModel);
+        magicSquareModel.setCreated(LocalDate.now());
         magicSquareRepository.save(magicSquareModel);
         return magicSquareModel;
     }
@@ -96,7 +104,7 @@ public class MagicSquareService {
     /**
      *
      * @param input массив чисел
-     * @return проверка является квадрат магическим
+     * @return является квадрат магическим
      */
     private boolean checkMagicSquare(int[] input) {
         if (input[0] + input[1] + input[2] == 15 &&

@@ -1,7 +1,8 @@
 CREATE TABLE magic_square (
     id INT IDENTITY PRIMARY KEY,
     input VARCHAR(9),
-    result VARCHAR(9)
+    result VARCHAR(9),
+    created DATE
 );
 CREATE TABLE str_model (
     id INT IDENTITY PRIMARY KEY,

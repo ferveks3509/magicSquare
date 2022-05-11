@@ -1,6 +1,7 @@
 package com.testproject.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -10,6 +11,7 @@ public class MagicSquareModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private LocalDate created;
     private String input;
     private int result;
 
@@ -40,6 +42,14 @@ public class MagicSquareModel {
         this.result = result;
     }
 
+    public LocalDate getCreated() {
+        return created;
+    }
+
+    public void setCreated(LocalDate created) {
+        this.created = created;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,6 +67,7 @@ public class MagicSquareModel {
     public String toString() {
         return "MagicSquareModel{" +
                 "id=" + id +
+                ", created=" + created +
                 ", input='" + input + '\'' +
                 ", result=" + result +
                 '}';
