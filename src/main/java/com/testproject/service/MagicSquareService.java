@@ -22,20 +22,11 @@ public class MagicSquareService {
         this.magicSquareRepository = magicSquareRepository;
     }
 
-    public List<MagicSquareModel> findByDate(String localDate) {
-        return magicSquareRepository.findByCreated(localDate);
-    }
-
-    public MagicSquareModel save(String input) {
-        MagicSquareModel magicSquareModel = new MagicSquareModel();
-        sorted(input, magicSquareModel);
-        magicSquareModel.setCreated(LocalDate.now());
-        magicSquareRepository.save(magicSquareModel);
-        return magicSquareModel;
-    }
 
     /**
-     * @param input набор данных пользователя без сохранения в БД
+     * Считает результат перемещения чисел
+     *
+     * @param input исходные данные
      * @return магический квадрат с кол-вом перестановок чисел
      */
     public MagicSquareModel result(String input) {
@@ -45,24 +36,25 @@ public class MagicSquareService {
     }
 
     /**
+     * Считает результат перемещения чисел и сохраняет в БД
      *
-     * @param fileName принимает имя файла. Читает и конвертирует в обьект MagicSquare
-     * @return обьект magicSquare
+     * @param input исходные данные
+     * @return магический квадрат с кол-вом перестановок чисел
      */
-    public MagicSquareModel loadFile(String fileName) {
-        StringBuilder sb = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(
-                new FileReader(fileName)
-        )){
-            sb.append(in.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public MagicSquareModel save(String input) {
         MagicSquareModel magicSquareModel = new MagicSquareModel();
-        sorted(sb.toString(), magicSquareModel);
+        sorted(input, magicSquareModel);
+        magicSquareModel.setCreated(LocalDate.now());
+        magicSquareRepository.save(magicSquareModel);
         return magicSquareModel;
     }
 
+    /**
+     * Сохраняет исходные данные в файл
+     *
+     * @param input
+     * @param nameFile
+     */
     public void saveFile(String input, String nameFile) {
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
@@ -75,6 +67,35 @@ public class MagicSquareService {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Поиск по дате
+     *
+     * @param localDate 2022-05-12(формат даты)
+     * @return коллекция со всеми идентичными датами
+     */
+    public List<MagicSquareModel> findByDate(String localDate) {
+        return magicSquareRepository.findByCreated(localDate);
+    }
+
+    /**
+     * @param fileName принимает имя файла. Читает и конвертирует в обьект MagicSquare
+     * @return обьект magicSquare
+     */
+    public MagicSquareModel loadFile(String fileName) {
+        StringBuilder sb = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(
+                new FileReader(fileName)
+        )) {
+            sb.append(in.readLine());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        MagicSquareModel magicSquareModel = new MagicSquareModel();
+        sorted(sb.toString(), magicSquareModel);
+        return magicSquareModel;
+    }
+
 
     /**
      * @param str              набор данных пользователя
