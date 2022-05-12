@@ -49,7 +49,7 @@ public class MagicSquareService {
      * @param fileName принимает имя файла. Читает и конвертирует в обьект MagicSquare
      * @return обьект magicSquare
      */
-    public MagicSquareModel findFile(String fileName) {
+    public MagicSquareModel loadFile(String fileName) {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader in = new BufferedReader(
                 new FileReader(fileName)

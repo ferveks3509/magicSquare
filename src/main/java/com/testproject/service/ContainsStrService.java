@@ -4,12 +4,10 @@ import com.testproject.model.ContainsStrModel;
 import com.testproject.repository.ContainsStrRepository;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.TreeSet;
 
 @Service
 public class ContainsStrService {
@@ -20,8 +18,23 @@ public class ContainsStrService {
         this.containsStrRepository = containsStrRepository;
     }
 
+    public ContainsStrModel loadFile(String fileName) {
+        ContainsStrModel containsStrModel = new ContainsStrModel();
+        try (BufferedReader in = new BufferedReader(
+                new FileReader(fileName)
+        )){
+            containsStrModel.setInputStr(in.readLine());
+            containsStrModel.setCompareStr(in.readLine());
+            containsStrModel.setCreated(LocalDate.now());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        containsStrModel.setResult(sortedString(containsStrModel.getInputStr(),
+                containsStrModel.getCompareStr()).toString());
+        return containsStrModel;
+    }
+
     public void saveFile(String inputFirst, String inputSecond ,String nameFile) {
-        TreeSet<String> result = sortedString(inputFirst, inputSecond);
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
                         new FileOutputStream(nameFile)
@@ -29,7 +42,6 @@ public class ContainsStrService {
         )) {
             out.println(inputFirst);
             out.println(inputSecond);
-            out.println(result.toString());
             out.println("Тип задачи: ContainsStr");
         } catch (IOException e) {
             e.printStackTrace();

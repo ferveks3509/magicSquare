@@ -145,6 +145,12 @@
                 <input type="text" class="form-control" id="saveFileStr" name="fileNameStr" placeholder="file.txt">
                 <button type="submit" class="btn btn-success">Экспортировать</button>
             </form>
+            <form th:action="@{/loadFileStr}" method="post">
+                <label for="loadFile" class="form-label">Введите текст который хотите найти и схоранить</label>
+                <input type="text" class="form-control" id="loadFile" name="fileNameStr"
+                       placeholder="file.txt">
+                <button type="submit" class="btn btn-success">Импортировать</button>
+            </form>
         </div>
         <div class="container">
             <div class="row" th:if="${resultStr != null}">

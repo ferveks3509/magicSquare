@@ -42,4 +42,10 @@ public class ContainsStrController {
         containsStrService.saveFile(firstInput, secondInput, fileNameStr);
         return "index";
     }
+
+    @PostMapping("/loadFileStr")
+    public String loadFile(@RequestParam("fileNameStr") String fileNameStr, Model model) {
+        model.addAttribute("resultStr", containsStrService.loadFile(fileNameStr));
+        return "index";
+    }
 }

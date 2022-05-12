@@ -48,8 +48,8 @@ public class MagicSquareController {
 
     @PostMapping("/findFile")
     public String findFile(@RequestParam("fileName") String fileName, Model model) {
-        magicSquareService.findFile(fileName);
-        model.addAttribute("result", magicSquareService.findFile(fileName));
+        magicSquareService.loadFile(fileName);
+        model.addAttribute("result", magicSquareService.loadFile(fileName));
         return "index";
     }
 }
