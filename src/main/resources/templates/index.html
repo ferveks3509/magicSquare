@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -126,11 +126,40 @@
                     <button type="submit" class="btn btn-success">Найти и сохранить</button>
                 </div>
             </form>
+            <form th:action="@{/findStrByDate}" method="post">
+                <div class="mb-3">
+                    <label for="inputDate" class="form-label">Введите текс для поиска</label>
+                    <input type="text" class="form-control" id="inputDate" name="localDate"
+                           placeholder="2022-05-11">
+                    <button type="submit" class="btn btn-success">Загрузить</button>
+                </div>
+            </form>
+            <form th:action="@{/saveFileStr}" method="post">
+                <label for="inputSaveStr1" class="form-label">Введите текст который хотите найти и схоранить</label>
+                <input type="text" class="form-control" id="inputSaveStr1" name="firstInput"
+                       placeholder="arp live strong">
+                <label for="inputSaveStr2" class="form-label">Введите слова который хотите и схоранить</label>
+                <input type="text" class="form-control" id="inputSaveStr2" name="secondInput"
+                       placeholder="lively alive harp sharp armstrong">
+                <label for="saveFileStr" class="form-label">Укажите имя файла</label>
+                <input type="text" class="form-control" id="saveFileStr" name="fileNameStr" placeholder="file.txt">
+                <button type="submit" class="btn btn-success">Экспортировать</button>
+            </form>
         </div>
         <div class="container">
             <div class="row" th:if="${resultStr != null}">
                 <label for="result">Результат</label>
                 <p id="result" th:text="${resultStr.toString()}"></p>
+            </div>
+            <div class="row" th:if="${resultStrList != null}">
+                <table>
+                    <tr>
+                        <th>Result</th>
+                    </tr>
+                    <tr th:each="str : ${resultStrList}">
+                        <td th:text="${str.toString()}"></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

@@ -4,6 +4,10 @@ import com.testproject.model.ContainsStrModel;
 import com.testproject.repository.ContainsStrRepository;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -14,6 +18,22 @@ public class ContainsStrService {
 
     public ContainsStrService(ContainsStrRepository containsStrRepository) {
         this.containsStrRepository = containsStrRepository;
+    }
+
+    public void saveFile(String inputFirst, String inputSecond ,String nameFile) {
+        TreeSet<String> result = sortedString(inputFirst, inputSecond);
+        try (PrintWriter out = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream(nameFile)
+                )
+        )) {
+            out.println(inputFirst);
+            out.println(inputSecond);
+            out.println(result.toString());
+            out.println("Тип задачи: ContainsStr");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<ContainsStrModel> findByDate(String localDate) {

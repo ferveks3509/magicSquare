@@ -28,4 +28,18 @@ public class ContainsStrController {
         model.addAttribute("resultStr", containsStrService.sortedSave(firstInput, secondInput));
         return "index";
     }
+
+    @PostMapping("/findStrByDate")
+    public String findByDate(@RequestParam("localDate") String localDate, Model model) {
+        model.addAttribute("resultStrList", containsStrService.findByDate(localDate));
+        return "index";
+    }
+
+    @PostMapping("/saveFileStr")
+    public String saveFile(@RequestParam("firstInput") String firstInput,
+                           @RequestParam("secondInput") String secondInput,
+                           @RequestParam("fileNameStr") String fileNameStr) {
+        containsStrService.saveFile(firstInput, secondInput, fileNameStr);
+        return "index";
+    }
 }
